@@ -1,0 +1,23 @@
+---
+interface Props { name: string }
+const { name } = Astro.props;
+---
+
+<svg class="symbol" viewBox="0 0 64 64" aria-hidden="true">
+	{name === 'light' && <><circle cx="32" cy="32" r="8"/><path d="M32 8v10M32 46v10M8 32h10M46 32h10M15 15l7 7M42 42l7 7M49 15l-7 7M22 42l-7 7"/></>}
+	{name === 'tree' && <><path d="M32 54V26M32 42l-11-9M32 36l10-9"/><path d="M18 34c-6-2-7-10-3-14 2-9 14-10 18-3 5-7 17-4 17 5 6 4 3 14-4 15-9 2-18 1-28-3Z"/><path d="M22 55h20"/></>}
+	{name === 'ark' && <><path d="M10 38h44l-8 14H18l-8-14Z"/><path d="M20 38V24h24v14M28 24v-8h8v8M15 52h34"/></>}
+	{name === 'stars' && <><path d="m32 10 3.5 10.5H47l-9.3 6.7 3.6 10.8-9.3-6.7-9.3 6.7 3.6-10.8-9.3-6.7h11.5L32 10Z"/><circle cx="14" cy="46" r="2"/><circle cx="50" cy="47" r="2"/></>}
+	{name === 'lamb' && <><path d="M19 42c-8-1-9-10-4-14-2-7 7-11 12-7 4-8 16-5 16 3 8-1 11 9 5 13 1 7-8 10-13 6-5 4-11 2-16-1Z"/><path d="M21 42v9M43 42v9M48 29l7-4M13 28l-6-3"/></>}
+	{name === 'tablets' && <><path d="M11 52V22c0-8 6-12 13-12v42H11ZM53 52V22c0-8-6-12-13-12v42h13Z"/><path d="M16 26h4M16 34h4M44 26h4M44 34h4"/></>}
+	{name === 'crown' && <><path d="m10 22 12 10 10-18 10 18 12-10-5 27H15l-5-27Z"/><path d="M15 49h34"/></>}
+	{name === 'temple' && <><path d="M8 22 32 10l24 12H8ZM13 50h38M17 26v20M27 26v20M37 26v20M47 26v20M10 54h44"/></>}
+	{name === 'scroll' && <><path d="M17 14h31v33c0 5-4 8-8 8H17c5 0 8-3 8-8V20c0-4-3-6-7-6-5 0-8 3-8 7s3 6 7 6h8"/><path d="M32 27h10M32 35h10M32 43h7"/></>}
+	{name === 'cross' && <><path d="M27 8h10v18h14v10H37v20H27V36H13V26h14V8Z"/></>}
+	{name === 'flame' && <><path d="M35 8c3 12-8 13-3 24 2-7 8-9 9-17 9 9 13 18 9 28-6 17-32 18-37 0-3-11 3-20 11-27-1 9 2 13 6 15-2-10 1-17 5-23Z"/></>}
+	{name === 'city' && <><path d="M10 54V24l12 7V17l10 6 10-12 12 10v33H10Z"/><path d="M16 38h6M32 34h6M44 31h4M16 46h6M32 44h6M44 41h4"/><path d="M7 54h50"/></>}
+</svg>
+
+<style>
+	.symbol { width: 2rem; height: 2rem; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+</style>

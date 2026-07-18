@@ -1,0 +1,22 @@
+{
+  "name": "chrono.bible",
+  "type": "module",
+  "private": true,
+  "engines": {
+    "node": ">=22.12.0"
+  },
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview",
+    "astro": "astro"
+  },
+  "dependencies": {
+    "@fontsource/dm-sans": "^5.2.8",
+    "@fontsource/libre-caslon-display": "^5.2.7",
+    "astro": "^7.1.1"
+  },
+  "devDependencies": {
+    "wrangler": "^4.112.0"
+  }
+}

@@ -1,0 +1,83 @@
+---
+import '@fontsource/dm-sans/latin-500.css';
+import '@fontsource/dm-sans/latin-600.css';
+import '@fontsource/dm-sans/latin-700.css';
+import '@fontsource/libre-caslon-display/latin-400.css';
+
+const title = 'chrono.bible — The Scarlet Thread';
+const description = 'Trace the Bible’s one unfolding story from creation to new creation through a Reformed, Christ-centered timeline and chronological reading plan.';
+const canonicalUrl = 'https://chrono.bible/';
+const socialImageUrl = `${canonicalUrl}images/chrono-bible-social.jpg`;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="description" content={description} />
+		<meta name="theme-color" content="#171b16" />
+		<link rel="canonical" href={canonicalUrl} />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:type" content="website" />
+		<meta property="og:site_name" content="chrono.bible" />
+		<meta property="og:url" content={canonicalUrl} />
+		<meta property="og:image" content={socialImageUrl} />
+		<meta property="og:image:type" content="image/jpeg" />
+		<meta property="og:image:width" content="1200" />
+		<meta property="og:image:height" content="630" />
+		<meta property="og:image:alt" content="chrono.bible — The Scarlet Thread: A Timeline of Redemptive History" />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={socialImageUrl} />
+		<meta name="twitter:image:alt" content="chrono.bible — The Scarlet Thread: A Timeline of Redemptive History" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2" />
+		<link rel="icon" sizes="any" href="/favicon.ico?v=2" />
+		<link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+		<link rel="preload" as="image" href="/images/creation-cinematic.webp" fetchpriority="high" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+	</head>
+	<body>
+		<a class="skip-link" href="#story">Skip to the timeline</a>
+		<slot />
+	</body>
+</html>
+
+<style is:global>
+	:root {
+		--canvas: #eee9dc;
+		--paper: #f8f3e7;
+		--ink: #1d211c;
+		--muted: #68685f;
+		--wine: #832f32;
+		--gold: #aa7b3f;
+		--gold-light: #d4b273;
+		--line: #cbc2ae;
+		--font-serif: 'Libre Caslon Display', Georgia, 'Times New Roman', serif;
+		--font-sans: 'DM Sans', system-ui, sans-serif;
+		--in-oklab: ;
+		font-family: var(--font-serif);
+		color: var(--ink);
+		background: var(--canvas);
+		font-synthesis: none;
+		scroll-behavior: smooth;
+	}
+
+	@supports (linear-gradient(in oklab, white, black)) { :root { --in-oklab: in oklab; } }
+	html { background: var(--canvas); scroll-padding-block-start: 1rem; }
+	body { margin: 0; min-inline-size: 20rem; overflow-x: hidden; }
+	main { display: block; }
+	button, a, summary { -webkit-tap-highlight-color: transparent; }
+	a:focus-visible, summary:focus-visible { outline: 0.18rem solid var(--gold-light); outline-offset: 0.25rem; }
+	.date :where(a, [x-apple-data-detectors]) { color: inherit !important; -webkit-text-fill-color: currentColor !important; text-decoration: none !important; }
+	::selection { color: var(--paper); background: var(--wine); }
+	.skip-link { position: fixed; z-index: 100; inset: 0.75rem auto auto 0.75rem; transform: translateY(-200%); padding: 0.8rem 1rem; color: var(--paper); background: var(--wine); font: 700 0.8rem var(--font-sans); text-decoration: none; }
+	.skip-link:focus { transform: translateY(0); }
+
+	@media (prefers-reduced-motion: reduce) { :root { scroll-behavior: auto; } }
+	@media (forced-colors: active) { :root { --line: CanvasText; --wine: LinkText; --gold: LinkText; } }
+</style>

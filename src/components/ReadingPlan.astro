@@ -1,0 +1,55 @@
+---
+import { bibleUrl, readingPlan } from '../data/timeline';
+---
+
+<div class="plan-grid">
+	{readingPlan.map((movement) => (
+		<details>
+			<summary>
+				<span class="number"><small>Week</small>{movement.number}</span>
+				<span class="summary-copy">
+					<strong>{movement.title}</strong>
+					<small>{movement.period}</small>
+				</span>
+				<span class="toggle" aria-hidden="true">+</span>
+			</summary>
+			<div class="plan-body">
+				<p>{movement.description}</p>
+				<ul>{movement.readings.map((reading) => <li>{reading}</li>)}</ul>
+				<a href={bibleUrl(movement.anchor)} target="_blank" rel="noreferrer">{movement.anchor.label} <span aria-hidden="true">↗</span></a>
+			</div>
+		</details>
+	))}
+</div>
+
+<style>
+	.plan-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); border-block-start: 1px solid var(--line); }
+	details { border-block-end: 1px solid var(--line); }
+	details:nth-child(odd) { border-inline-end: 1px solid var(--line); }
+	summary { list-style: none; cursor: pointer; min-block-size: 7.5rem; display: grid; grid-template-columns: 3rem 1fr 2rem; align-items: center; gap: 1rem; padding: 1.1rem 1.5rem; transition: background 180ms ease; }
+	summary::-webkit-details-marker { display: none; }
+	summary:hover { background: color-mix(in oklab, var(--gold-light) 16%, transparent); }
+	.number { display: grid; gap: 0.3rem; font: 700 0.72rem/1 var(--font-sans); color: var(--wine); letter-spacing: 0.12em; }
+	.number small { font: inherit; font-size: 0.48rem; text-transform: uppercase; color: var(--muted); }
+	.summary-copy { display: grid; gap: 0.35rem; }
+	.summary-copy strong { font: 500 clamp(1.3rem, 2.4vw, 1.75rem)/1.1 var(--font-serif); }
+	.summary-copy small { color: var(--muted); font: 700 0.67rem/1 var(--font-sans); text-transform: uppercase; letter-spacing: 0.12em; }
+	.toggle { display: grid; place-items: center; inline-size: 1.8rem; block-size: 1.8rem; border: 1px solid var(--line); border-radius: 50%; font-family: var(--font-sans); transition: transform 180ms ease, background 180ms ease; }
+	details[open] .toggle { transform: rotate(45deg); color: var(--paper); background: var(--wine); border-color: var(--wine); }
+	.plan-body { padding: 0 2rem 2rem 5.5rem; }
+	.plan-body > p { color: var(--muted); line-height: 1.65; margin-block: 0 1rem; max-inline-size: 35rem; }
+	ul { list-style: none; padding: 0; margin: 0 0 1.25rem; display: grid; gap: 0.55rem; }
+	li { position: relative; padding-inline-start: 1rem; line-height: 1.45; }
+	li::before { content: ''; position: absolute; inset-inline-start: 0; inset-block-start: 0.65em; inline-size: 0.28rem; block-size: 0.28rem; background: var(--gold); transform: rotate(45deg); }
+	a { display: inline-flex; align-items: center; min-block-size: 2.75rem; gap: 0.5rem; color: var(--paper); background: var(--ink); padding-inline: 1rem; border-radius: 999px; text-decoration: none; font: 700 0.72rem/1 var(--font-sans); text-transform: uppercase; letter-spacing: 0.08em; }
+	a:hover { background: var(--wine); }
+
+	@media (max-width: 46rem) {
+		.plan-grid { grid-template-columns: 1fr; }
+		details:nth-child(odd) { border-inline-end: 0; }
+		summary { padding-inline: 0.5rem; grid-template-columns: 2.4rem 1fr 2rem; }
+		.plan-body { padding-inline: 2.9rem 0.5rem; }
+	}
+
+	@media (pointer: coarse) { summary { min-block-size: 5rem; } }
+</style>

@@ -1,0 +1,212 @@
+---
+import StorySymbol from './StorySymbol.astro';
+import { bibleUrl, type TimelineEvent } from '../data/timeline';
+
+interface Props { event: TimelineEvent; index: number }
+const { event, index } = Astro.props;
+const eventImage = `/images/events/${event.id}.webp`;
+const dateNoteId = event.dateNote ? `date-note-${event.id}` : undefined;
+// Keep iOS data detectors from interpreting year ranges as telephone numbers.
+const displayYear = event.year.replace(/(\d)([–-])(?=\d)/g, '$1\u2060$2\u2060');
+const shortDateContext = event.date.length <= 32;
+const threadLabel = {
+	fulfillment: 'Promise & fulfillment',
+	trajectory: 'Canonical trajectory',
+	analogy: 'Gospel analogy',
+}[event.connection ?? 'fulfillment'];
+---
+
+<article class="event" id={event.id} data-side={index % 2 === 0 ? 'left' : 'right'} data-year={event.year} data-title={event.title} data-image={eventImage} data-importance={event.importance ?? 'major'}>
+	<div class="event-art" aria-hidden="true"></div>
+	<div class="marker" aria-hidden="true"><StorySymbol name={event.symbol} /></div>
+	<div class="card">
+		<header>
+			<p class="eyebrow"><span>{String(index + 1).padStart(2, '0')}</span> {event.era}</p>
+			<p class="date">
+				<span class="date-year" aria-describedby={dateNoteId}>{displayYear}{event.dateNote && <sup aria-hidden="true">*</sup>}</span>
+				{event.date && <span class:list={['date-context', { 'date-context-short': shortDateContext }]}>{event.date}</span>}
+			</p>
+			<h3>{event.title}</h3>
+		</header>
+		<p class="summary">{event.summary}</p>
+		<div class="christ-thread">
+			<p class="thread-label"><span aria-hidden="true">✦</span> {threadLabel}</p>
+			<p>{event.christ}</p>
+		</div>
+		<nav class="passages" aria-label={`Scripture readings for ${event.title}`}>
+			{event.passages.map((passage) => (
+				<a href={bibleUrl(passage)} target="_blank" rel="noreferrer">
+					{passage.label}<span aria-hidden="true">↗</span>
+				</a>
+			))}
+		</nav>
+		{event.dateNote && <p class="date-note" id={dateNoteId}><sup aria-hidden="true">*</sup><span>{event.dateNote}</span></p>}
+	</div>
+</article>
+
+<style>
+	.event {
+		position: relative;
+		z-index: 0;
+		isolation: isolate;
+		display: grid;
+		grid-template-columns: 1fr 3.5rem 1fr;
+		min-block-size: 88dvh;
+		align-items: center;
+		content-visibility: auto;
+		contain-intrinsic-block-size: auto 50rem;
+		view-timeline-name: --event-view;
+		view-timeline-axis: block;
+	}
+
+	.event.has-background::before {
+		content: '';
+		position: absolute;
+		z-index: -1;
+		inset-block: -12%;
+		inset-inline: calc(50% - 50vw);
+		background-position: center;
+		background-size: cover;
+		background-repeat: no-repeat;
+		background-image: var(--event-background);
+		opacity: 0.58;
+		-webkit-mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+		mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
+	}
+
+	.event-art { display: none; }
+
+	.event[data-importance='supporting'] {
+		min-block-size: 52dvh;
+		contain-intrinsic-block-size: auto 34rem;
+	}
+
+	.event[data-importance='supporting'] .card { padding: clamp(1.35rem, 2.2vw, 2rem); }
+	.event[data-importance='supporting'] h3 { font-size: clamp(1.65rem, 3.2vw, 2.55rem); }
+	.event[data-importance='supporting'] .summary { font-size: 0.96rem; }
+	.event[data-importance='supporting'] .marker { inline-size: 2.9rem; block-size: 2.9rem; }
+
+	.card {
+		position: relative;
+		background: color-mix(in oklab, var(--paper) 92%, transparent);
+		border: 1px solid var(--line);
+		border-radius: 0.25rem 2rem 0.25rem 2rem;
+		padding: clamp(1.5rem, 3vw, 2.5rem);
+		box-shadow: 0 1.5rem 5rem rgba(35, 31, 23, 0.08);
+		isolation: isolate;
+		transition: border-color 180ms ease, box-shadow 180ms ease;
+	}
+
+	.card::before {
+		content: '';
+		position: absolute;
+		inset: 0.45rem;
+		border: 1px solid color-mix(in oklab, var(--gold) 32%, transparent);
+		border-radius: 0.15rem 1.65rem 0.15rem 1.65rem;
+		pointer-events: none;
+		z-index: -1;
+	}
+
+	.event[data-side='left'] .card { grid-column: 1; }
+	.event[data-side='right'] .card { grid-column: 3; }
+
+	.marker {
+		position: relative;
+		grid-column: 2;
+		grid-row: 1;
+		place-self: center;
+		display: grid;
+		place-items: center;
+		inline-size: 3.5rem;
+		block-size: 3.5rem;
+		border-radius: 50%;
+		color: var(--paper);
+		background: var(--ink);
+		border: 0.25rem solid var(--canvas);
+		box-shadow: 0 0 0 1px var(--gold);
+		z-index: 2;
+		transition: color 180ms ease, background-color 180ms ease, box-shadow 180ms ease;
+	}
+
+	.event.is-current .card {
+		border-color: var(--gold);
+		box-shadow: 0 0 0 0.18rem color-mix(in oklab, var(--gold) 28%, transparent), 0 1.5rem 5rem rgba(35, 31, 23, 0.13);
+	}
+
+	.event.is-current .marker {
+		color: var(--ink);
+		background: var(--gold-light);
+		box-shadow: 0 0 0 2px var(--wine), 0 0 0 0.7rem color-mix(in oklab, var(--gold-light) 26%, transparent);
+	}
+
+	header { border-block-end: 1px solid var(--line); padding-block-end: 1.2rem; margin-block-end: 1.25rem; }
+	.eyebrow, .date, .thread-label { font-family: var(--font-sans); text-transform: uppercase; letter-spacing: 0.12em; font-weight: 700; }
+	.eyebrow { color: var(--wine); font-size: 0.68rem; margin: 0 0 0.6rem; display: flex; align-items: center; gap: 0.65rem; }
+	.eyebrow span { color: var(--paper); background: var(--wine); padding: 0.2rem 0.35rem; border-radius: 0.15rem; }
+	.date { display: flex; flex-wrap: wrap; align-items: baseline; column-gap: 0.55rem; row-gap: 0.25rem; color: var(--muted); font-size: 0.68rem; margin: 0 0 0.6rem; }
+	.date-year { flex: none; color: var(--ink); white-space: nowrap; text-wrap: nowrap; }
+	.date-year sup { margin-inline-start: 0.14rem; font-size: 0.65em; }
+	.date-context { flex: 1 1 20rem; min-inline-size: 0; white-space: normal; text-wrap: pretty; }
+	.date-context-short { flex: 0 0 auto; white-space: nowrap; text-wrap: nowrap; }
+	h3 { font-size: clamp(1.8rem, 4vw, 3.2rem); line-height: 0.98; letter-spacing: -0.035em; text-wrap: balance; margin: 0; font-weight: 500; }
+	.summary { color: var(--muted); font-size: 1.02rem; line-height: 1.7; margin: 0; text-wrap: pretty; }
+	.christ-thread { margin-block: 1.4rem; padding: 1.2rem 1.25rem; background: var(--ink); color: var(--paper); border-radius: 0.15rem 1rem 0.15rem 1rem; }
+	.christ-thread p { margin: 0; line-height: 1.65; text-wrap: pretty; }
+	.christ-thread .thread-label { color: var(--gold-light); font-size: 0.67rem; margin-block-end: 0.55rem; }
+	.thread-label span { margin-inline-end: 0.35rem; }
+	.passages { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+	.passages a { min-block-size: 2rem; display: inline-flex; align-items: center; gap: 0.35rem; border-block-end: 1px solid var(--gold); color: var(--ink); text-decoration: none; font-family: var(--font-sans); font-size: 0.76rem; font-weight: 700; }
+	.passages a:hover { color: var(--wine); }
+	.passages span { color: var(--wine); }
+	.date-note { display: flex; gap: 0.4rem; margin: 1rem 0 0; color: var(--muted); font: 600 0.64rem/1.45 var(--font-sans); letter-spacing: 0.025em; }
+	.date-note sup { flex: none; color: var(--wine); font-weight: 700; }
+
+	@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+		@media (prefers-reduced-motion: no-preference) {
+			.event.has-background::before {
+				animation: backdrop-enter auto linear both;
+				animation-timeline: --event-view;
+				animation-range: entry 0% entry 76%;
+			}
+			.card {
+				animation: event-enter auto linear backwards, event-exit auto linear forwards;
+				animation-timeline: --event-view;
+				animation-range: entry 34% cover 30%, exit 22% exit 72%;
+			}
+			.event[data-side='left'] .card { --event-x: -2.5rem; }
+			.event[data-side='right'] .card { --event-x: 2.5rem; }
+			.marker { animation: marker-bloom auto linear both; animation-timeline: --event-view; animation-range: entry 28% cover 38%; }
+		}
+	}
+
+	@keyframes backdrop-enter { from { opacity: 0.06; transform: scale(1.035); } }
+	@keyframes event-enter { from { opacity: 0.02; transform: translateX(var(--event-x)) translateY(1.5rem) scale(0.97); } }
+	@keyframes event-exit { to { opacity: 0.3; transform: scale(0.975); } }
+	@keyframes marker-bloom { from { transform: translateY(var(--marker-y, 0)) scale(0.7) rotate(-12deg); } 55%, to { transform: translateY(0) scale(1) rotate(0); } }
+
+	@media (max-width: 56rem) {
+		.event { grid-template-columns: 3.2rem 1fr; grid-template-rows: auto; min-block-size: auto; padding-block: 0 clamp(4rem, 10dvh, 7rem); align-items: start; }
+		.event-art { position: sticky; z-index: 0; inset-block-start: 0; grid-column: 1 / -1; grid-row: 1; align-self: start; justify-self: center; display: block; inline-size: 100vw; block-size: 100svh; margin-inline: calc(50% - 50vw); overflow: hidden; background-color: color-mix(in oklab, var(--ink) 12%, var(--canvas)); background-position: center; background-size: cover; background-repeat: no-repeat; }
+		.event.has-background .event-art { background-image: var(--event-background); }
+		.event-art::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to bottom, color-mix(in oklab, var(--canvas) 72%, transparent), transparent 23% 70%, color-mix(in oklab, var(--canvas) 84%, transparent)); pointer-events: none; }
+		.event[data-side] .card { z-index: 1; grid-column: 2; grid-row: 1; margin-block-start: 100svh; }
+		.marker { grid-column: 1; grid-row: 1; place-self: start center; inline-size: 3rem; block-size: 3rem; margin-block-start: calc(100svh + 1.35rem); --marker-y: 1.5rem; }
+		.event[data-side] .card { --event-x: 1.5rem; }
+		.event.has-background::before { content: none; }
+		.card { background: color-mix(in oklab, var(--paper) 88%, transparent); }
+		.event[data-importance='supporting'] { min-block-size: auto; padding-block: 0 clamp(3.5rem, 8dvh, 5.5rem); }
+	}
+
+	@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+		@media (max-width: 56rem) and (prefers-reduced-motion: no-preference) {
+			.event { timeline-scope: --card-view; }
+			.card { view-timeline-name: --card-view; view-timeline-axis: block; animation-timeline: --card-view; animation-range: entry 8% entry 82%, exit 22% exit 72%; }
+			.marker { animation-timeline: --card-view; animation-range: entry 8% entry 82%; }
+		}
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.card, .marker { animation: none !important; opacity: 1 !important; transform: none !important; }
+		.card, .marker { transition: none; }
+	}
+</style>

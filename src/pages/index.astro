@@ -1,0 +1,380 @@
+---
+import Layout from '../layouts/Layout.astro';
+import TimelineEvent from '../components/TimelineEvent.astro';
+import ReadingPlan from '../components/ReadingPlan.astro';
+import { bibleUrl } from '../data/timeline';
+import { expandedTimeline as timeline } from '../data/expanded-timeline';
+---
+
+<Layout>
+	<div class="scroll-progress" aria-hidden="true"></div>
+	<output class="year-counter" id="year-counter" aria-label="Approximate year in the timeline" aria-live="off" aria-hidden="true">
+		<span>Approximate year for</span>
+		<strong>Before the ages</strong>
+		<small id="year-context">The eternal purpose of God</small>
+	</output>
+	<header class="site-header">
+		<a class="brand" href="#top" aria-label="chrono.bible, The Scarlet Thread, home">
+			<svg viewBox="0 0 38 38" aria-hidden="true"><circle cx="19" cy="19" r="17"/><path d="M8 22c7-1 9-8 11-13 1 7 5 13 11 13-6 1-10 4-11 9-2-5-5-8-11-9Z"/></svg>
+			<span class="brand-copy"><strong>chrono.bible</strong><small>The Scarlet Thread</small></span>
+		</a>
+		<nav aria-label="Primary navigation">
+			<a href="#story">The story</a>
+			<a href="#plan">Reading plan</a>
+			<a href="#convictions">Convictions</a>
+		</nav>
+		<a class="read-button" href={bibleUrl({ label: 'Genesis 1', book: 'genesis', chapter: 1 })} target="_blank" rel="noreferrer">Read in BSB <span aria-hidden="true">↗</span></a>
+	</header>
+
+	<main id="top">
+		<section class="hero" aria-labelledby="hero-title">
+			<div class="hero-orbit orbit-one" aria-hidden="true"></div>
+			<div class="hero-orbit orbit-two" aria-hidden="true"></div>
+			<div class="hero-inner">
+				<p class="kicker"><span></span> One covenant of grace · One promised Redeemer</p>
+				<h1 id="hero-title">All of Scripture.<br/><em>One unfolding story.</em></h1>
+				<p class="hero-copy">Trace the sovereign purpose of God from the first creation to the new—from promise, through fulfillment, to the glory of Christ.</p>
+				<div class="hero-actions">
+					<a class="primary-action" href="#story">Enter the story <span aria-hidden="true">↓</span></a>
+					<a class="text-action" href="#plan">Explore the 52-week plan <span aria-hidden="true">→</span></a>
+				</div>
+			</div>
+			<div class="hero-seal" aria-hidden="true">
+				<svg viewBox="0 0 180 180"><defs><path id="sealPath" d="M90,90 m-67,0 a67,67 0 1,1 134,0 a67,67 0 1,1 -134,0"/></defs><text><textPath href="#sealPath">CREATION · FALL · REDEMPTION · GLORY · </textPath></text><circle cx="90" cy="90" r="46"/><path d="M90 54v72M65 78h50"/></svg>
+			</div>
+			<div class="scroll-cue" aria-hidden="true"><span>Scroll to follow the thread</span><i></i></div>
+		</section>
+
+		<section class="prologue" aria-labelledby="prologue-title">
+			<div class="section-number">00</div>
+			<div>
+				<p class="overline">How to read this timeline</p>
+				<h2 id="prologue-title">The Bible is not a collection of disconnected moral tales.</h2>
+			</div>
+			<div class="prologue-copy">
+				<p>It is God’s inspired, inerrant, and authoritative Word, recording and interpreting his works of creation, judgment, and redemption in history. Each covenantal movement advances the one plan centered on Jesus Christ.</p>
+				<p>Earlier events truly happened in their own historical setting. The cards distinguish direct promise and fulfillment, broad canonical trajectories, and more modest gospel analogies so that Christ is read from Scripture rather than imposed upon it.</p>
+			</div>
+		</section>
+
+		<section id="story" class="story-section" aria-labelledby="story-title">
+			<header class="story-heading">
+				<p class="overline">The drama of redemption</p>
+				<h2 id="story-title">From garden<br/>to <em>glory</em></h2>
+				<p>Follow the scarlet thread through {timeline.length} decisive movements in redemptive history.</p>
+				<p class="chronology-note"><span>Chronology</span> Genesis 1–11 follows James Ussher’s traditional framework: creation in 4004 BC, the flood in 2349–2348 BC, and Babel around 2242 BC. From Abraham onward, the timeline uses a common conservative early-Exodus model rather than Ussher’s complete system, including an Exodus around 1446 BC. New Testament entries use an AD 30 Passion model; AD 33 remains a responsible conservative alternative. Exact BC/AD correlations are interpretive estimates, not dates supplied directly by the inspired text.</p>
+			</header>
+			<div class="timeline">
+				<div class="timeline-line" aria-hidden="true"></div>
+				{timeline.map((event, index) => <TimelineEvent event={event} index={index} />)}
+			</div>
+		</section>
+
+		<section class="hinge" aria-label="The center of redemptive history">
+			<div class="hinge-rule" aria-hidden="true"></div>
+			<p>“For all the promises of God are ‘Yes’ in Christ.”</p>
+			<a href={bibleUrl({ label: '2 Corinthians 1:20', book: '2-corinthians', chapter: 1, verse: 20 })} target="_blank" rel="noreferrer">2 Corinthians 1:20 · BSB <span aria-hidden="true">↗</span></a>
+		</section>
+
+		<section id="plan" class="plan-section" aria-labelledby="plan-title">
+			<header class="plan-heading">
+				<div>
+					<p class="overline">A whole-Bible journey</p>
+					<h2 id="plan-title">Read the story<br/><em>in its sequence.</em></h2>
+				</div>
+				<div class="plan-intro">
+					<p>This 52-week chronological plan assigns a complete reading for every week and covers all 66 books of the Protestant canon. History and prophecy follow a responsible conservative sequence, the Psalter runs as a canonical parallel track, and the four Gospels are compared in broad complementary phases.</p>
+					<p class="note"><span>Chronology note</span> Scripture does not date every book or event. Job’s setting, Joel and Obadiah, several epistles, and Revelation remain debated. Isaiah 1–66 is kept with the unified eighth-century prophetic witness; later chapters look ahead to exile and restoration rather than implying later authorship. The plan marks a selected sequence without treating estimates as inspired dates.</p>
+				</div>
+			</header>
+			<ReadingPlan />
+		</section>
+
+		<section id="convictions" class="convictions" aria-labelledby="convictions-title">
+			<div class="convictions-intro">
+				<p class="overline">Our theological posture</p>
+				<h2 id="convictions-title">Read with confidence.<br/><em>Read toward Christ.</em></h2>
+				<p>This project is intentionally rooted in the Reformed orthodox tradition and the church’s historic confession of the triune God.</p>
+			</div>
+			<div class="conviction-grid">
+				<article><span>01</span><h3>Inspired & inerrant</h3><p>The Bible is God-breathed, true and trustworthy in all it affirms. We embrace the doctrine expressed by the Chicago Statement on Biblical Inerrancy.</p></article>
+				<article><span>02</span><h3>Covenantal & unified</h3><p>After Adam broke the covenant of works, the sovereign God revealed and administered the one covenant of grace through promises, types, sacrifices, and the unfolding biblical covenants, progressively revealing the Redeemer and his kingdom.</p></article>
+				<article><span>03</span><h3>Christ-centered</h3><p>Christ is not imposed upon the text. He is the promised center to whom Scripture’s covenants, offices, sacrifices, kingdom, and hopes organically lead.</p></article>
+				<article><span>04</span><h3>Grace alone</h3><p>Salvation is by grace alone, through faith alone, in Christ alone, to God’s glory alone. The Spirit effectually applies the Son’s finished work to his people.</p></article>
+			</div>
+		</section>
+
+		<section class="finale">
+			<p class="overline">The story is still moving</p>
+			<h2>“Behold, I make<br/><em>all things new.”</em></h2>
+			<p>Open the Scriptures. See the King. Await his appearing.</p>
+			<a href={bibleUrl({ label: 'Read Revelation 21', book: 'revelation', chapter: 21 })} target="_blank" rel="noreferrer">Read Revelation 21 in the BSB <span aria-hidden="true">↗</span></a>
+		</section>
+	</main>
+
+	<footer>
+		<a class="brand footer-brand" href="#top" aria-label="chrono.bible, The Scarlet Thread, back to top">
+			<span class="brand-copy"><strong>chrono.bible</strong><small>The Scarlet Thread</small></span>
+		</a>
+		<p>A chronological guide to redemptive history from a Reformed perspective.</p>
+		<p class="footer-meta">Brought to you by <a href="https://lets.church" target="_blank" rel="noreferrer">lets.church</a> · <a href="https://lets.bible" target="_blank" rel="noreferrer">lets.bible</a></p>
+	</footer>
+
+	<script>
+		const counter = document.querySelector<HTMLOutputElement>('#year-counter');
+		const counterValue = counter?.querySelector<HTMLElement>('strong');
+		const counterContext = counter?.querySelector<HTMLElement>('#year-context');
+		const story = document.querySelector<HTMLElement>('#story');
+		const events = document.querySelectorAll<HTMLElement>('.event[data-year]');
+		const backgroundEvents = document.querySelectorAll<HTMLElement>('.event[data-image]');
+		const deepTimelineLinks = document.querySelectorAll<HTMLAnchorElement>('.site-header a[href="#plan"], .site-header a[href="#convictions"]');
+
+		deepTimelineLinks.forEach((link) => link.addEventListener('click', () => {
+			story?.classList.add('is-anchor-ready');
+		}));
+
+		const loadEventBackground = (event: HTMLElement) => {
+			const image = event.dataset.image;
+			if (!image || event.classList.contains('has-background')) return;
+			event.style.setProperty('--event-background', `url("${image}")`);
+			event.classList.add('has-background');
+		};
+
+		if ('IntersectionObserver' in window) {
+			const backgroundObserver = new IntersectionObserver((entries) => {
+				for (const entry of entries) {
+					if (!entry.isIntersecting) continue;
+					loadEventBackground(entry.target as HTMLElement);
+					backgroundObserver.unobserve(entry.target);
+				}
+			}, { rootMargin: '125% 0px' });
+
+			backgroundEvents.forEach((event) => backgroundObserver.observe(event));
+		} else {
+			backgroundEvents.forEach(loadEventBackground);
+		}
+
+		if (counter && counterValue && story) {
+			const storyObserver = new IntersectionObserver(([entry]) => {
+				counter.classList.toggle('is-visible', entry.isIntersecting);
+				counter.setAttribute('aria-hidden', String(!entry.isIntersecting));
+			}, { rootMargin: '-48px 0px -80% 0px' });
+			storyObserver.observe(story);
+
+			const eventList = Array.from(events);
+			let currentEvent: HTMLElement | undefined;
+			let updateQueued = false;
+
+			const setCurrentEvent = (event: HTMLElement | undefined) => {
+				if (!event || currentEvent === event) return;
+				currentEvent?.classList.remove('is-current');
+				currentEvent?.removeAttribute('aria-current');
+				currentEvent = event;
+				currentEvent.classList.add('is-current');
+				currentEvent.setAttribute('aria-current', 'step');
+
+				const year = currentEvent.dataset.year;
+				const title = currentEvent.dataset.title;
+				if (year && counterValue.textContent !== year) counterValue.textContent = year;
+				if (title && counterContext && counterContext.textContent !== title) counterContext.textContent = title;
+			};
+
+			const updateYear = () => {
+				const readingLine = window.innerHeight * 0.45;
+				let activeEvent = eventList[0];
+				let closestDistance = Number.POSITIVE_INFINITY;
+
+				for (const event of eventList) {
+					const rect = event.getBoundingClientRect();
+					const distance = readingLine < rect.top
+						? rect.top - readingLine
+						: readingLine > rect.bottom
+							? readingLine - rect.bottom
+							: 0;
+
+					if (distance < closestDistance) {
+						activeEvent = event;
+						closestDistance = distance;
+					}
+				}
+
+				setCurrentEvent(activeEvent);
+				updateQueued = false;
+			};
+
+			const queueYearUpdate = () => {
+				if (updateQueued) return;
+				updateQueued = true;
+				requestAnimationFrame(updateYear);
+			};
+
+			window.addEventListener('scroll', queueYearUpdate, { passive: true });
+			window.addEventListener('resize', queueYearUpdate);
+			updateYear();
+		}
+	</script>
+</Layout>
+
+<style>
+	.scroll-progress { position: fixed; inset: 0 0 auto; block-size: 0.2rem; background: var(--wine); transform: scaleX(0); transform-origin: 0 50%; z-index: 50; }
+	.year-counter { position: fixed; z-index: 45; inset: 0.8rem auto auto 50%; translate: -50% calc(-100% - 2rem); display: grid; justify-items: center; gap: 0.15rem; min-inline-size: 12rem; max-inline-size: min(20rem, calc(100vw - 2rem)); padding: 0.55rem 1.1rem 0.6rem; visibility: hidden; opacity: 0; color: var(--paper); background: var(--ink); background: color-mix(in oklab, var(--ink) 92%, transparent); border: 1px solid var(--gold); border-color: color-mix(in oklab, var(--gold) 72%, transparent); border-radius: 1.1rem; box-shadow: 0 0.7rem 2rem rgba(29,33,28,0.18); backdrop-filter: blur(0.75rem); pointer-events: none; transition: visibility 220ms, opacity 220ms ease, translate 220ms ease; }
+	.year-counter.is-visible { visibility: visible; opacity: 1; translate: -50% 0; }
+	.year-counter span { color: var(--gold-light); font: 700 0.52rem/1 var(--font-sans); letter-spacing: 0.13em; text-transform: uppercase; }
+	.year-counter strong { font: 700 0.76rem/1.2 var(--font-sans); letter-spacing: 0.06em; white-space: nowrap; }
+	.year-counter small { max-inline-size: 18rem; overflow: hidden; color: rgba(248,243,231,0.68); font: 600 0.58rem/1.25 var(--font-sans); letter-spacing: 0.025em; text-align: center; text-overflow: ellipsis; white-space: nowrap; }
+	.site-header { position: absolute; z-index: 10; inset: 0 0 auto; min-block-size: 5.5rem; display: grid; grid-template-columns: 1fr auto 1fr; align-items: center; padding-inline: clamp(1.2rem, 4vw, 4rem); color: var(--paper); border-block-end: 1px solid rgba(255,255,255,0.18); font-family: var(--font-sans); }
+	.brand { display: inline-flex; align-items: center; gap: 0.7rem; color: inherit; text-decoration: none; font: 700 0.74rem/1 var(--font-sans); letter-spacing: 0.1em; text-transform: uppercase; }
+	.brand svg { inline-size: 2rem; fill: none; stroke: currentColor; stroke-width: 1.2; }
+	.brand-copy { display: grid; gap: 0.2rem; }
+	.brand-copy strong { font: inherit; letter-spacing: inherit; }
+	.brand-copy small { color: var(--gold-light); font: 600 0.5rem/1 var(--font-sans); letter-spacing: 0.11em; }
+	.site-header nav { display: flex; gap: clamp(1.4rem, 3vw, 3rem); }
+	.site-header nav a { min-block-size: 2.75rem; display: inline-flex; align-items: center; color: inherit; text-decoration: none; font-size: 0.72rem; font-weight: 700; letter-spacing: 0.05em; }
+	.site-header nav a:hover { color: var(--gold-light); }
+	.read-button { justify-self: end; display: inline-flex; align-items: center; gap: 0.5rem; min-block-size: 2.75rem; padding-inline: 1.1rem; color: var(--ink); background: var(--paper); border-radius: 999px; text-decoration: none; text-transform: uppercase; font-size: 0.67rem; font-weight: 800; letter-spacing: 0.08em; }
+	.read-button:hover { background: var(--gold-light); }
+
+	.hero { position: relative; overflow: hidden; min-block-size: 100dvh; display: grid; place-items: center; padding: 8rem max(1.25rem, 6vw) 5rem; color: var(--paper); background: linear-gradient(90deg, rgba(8,12,9,0.93) 0%, rgba(8,12,9,0.7) 48%, rgba(8,12,9,0.18) 100%), url('/images/creation-cinematic.webp') center / cover no-repeat, #151914; isolation: isolate; }
+	.hero::before { content: ''; position: absolute; inset: 0; opacity: 0.18; background-image: repeating-linear-gradient(92deg, transparent 0 5rem, rgba(255,255,255,0.05) 5rem calc(5rem + 1px)), repeating-linear-gradient(4deg, transparent 0 4rem, rgba(255,255,255,0.035) 4rem calc(4rem + 1px)); mix-blend-mode: screen; z-index: -1; }
+	.hero::after { content: ''; position: absolute; inset: auto 0 0; block-size: 13rem; background: linear-gradient(transparent, rgba(7,9,7,0.7)); z-index: -1; }
+	.hero-inner { inline-size: min(75rem, 100%); }
+	.kicker, .overline { display: flex; align-items: center; gap: 0.7rem; font: 800 0.68rem/1.4 var(--font-sans); text-transform: uppercase; letter-spacing: 0.16em; }
+	.kicker { color: var(--gold-light); margin: 0 0 1.5rem; }
+	.kicker span { inline-size: 2rem; block-size: 1px; background: currentColor; }
+	h1 { max-inline-size: 72rem; margin: 0; font-size: clamp(3.8rem, 9.2vw, 9.5rem); line-height: 0.82; letter-spacing: -0.065em; font-weight: 400; text-wrap: balance; }
+	h1 em, h2 em { color: var(--gold-light); font-weight: 400; }
+	.hero-copy { margin: 2.5rem 0 0 auto; max-inline-size: 35rem; font-size: clamp(1rem, 2vw, 1.25rem); line-height: 1.7; color: rgba(247,242,229,0.76); text-wrap: pretty; }
+	.hero-actions { margin: 2.2rem 0 0 auto; max-inline-size: 35rem; display: flex; align-items: center; flex-wrap: wrap; gap: 1.5rem; font-family: var(--font-sans); }
+	.primary-action { display: inline-flex; min-block-size: 3.2rem; align-items: center; gap: 1.25rem; padding-inline: 1.25rem; border: 1px solid var(--gold); color: var(--paper); text-decoration: none; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; }
+	.primary-action span { color: var(--gold-light); }
+	.primary-action:hover { background: var(--wine); border-color: var(--wine); }
+	.text-action { color: var(--paper); text-decoration: none; font-size: 0.75rem; border-block-end: 1px solid rgba(255,255,255,0.35); padding-block: 0.8rem; }
+	.hero-seal { position: absolute; inline-size: clamp(7.5rem, 13vw, 12rem); inset: auto clamp(1rem, 5vw, 5rem) 4rem auto; color: var(--gold-light); opacity: 0.72; }
+	.hero-seal svg { overflow: visible; fill: none; stroke: currentColor; stroke-width: 0.7; }
+	.hero-seal text { fill: currentColor; stroke: none; font: 700 0.58rem var(--font-sans); letter-spacing: 0.15em; }
+	.scroll-cue { position: absolute; inset: auto auto 2rem clamp(1.25rem, 4vw, 4rem); display: flex; align-items: center; gap: 1rem; color: rgba(247,242,229,0.52); font: 700 0.61rem var(--font-sans); text-transform: uppercase; letter-spacing: 0.13em; }
+	.scroll-cue i { position: relative; inline-size: 4.5rem; block-size: 1px; background: rgba(255,255,255,0.35); }
+	.scroll-cue i::after { content: ''; position: absolute; inline-size: 0.35rem; block-size: 0.35rem; border-radius: 50%; background: var(--gold-light); inset-block-start: -0.15rem; }
+	.hero-orbit { position: absolute; border: 1px solid rgba(202,163,98,0.13); border-radius: 50%; pointer-events: none; }
+	.orbit-one { inline-size: min(72vw, 60rem); aspect-ratio: 1; inset: -24rem -10rem auto auto; }
+	.orbit-two { inline-size: min(48vw, 38rem); aspect-ratio: 1; inset: auto auto -22rem -8rem; }
+
+	.prologue { display: grid; grid-template-columns: 5rem 1.2fr 1fr; gap: clamp(1.5rem, 5vw, 6rem); max-inline-size: 90rem; margin: 0 auto; padding: clamp(6rem, 12vw, 11rem) clamp(1.25rem, 5vw, 5rem); }
+	.section-number { color: var(--wine); font: 800 0.7rem var(--font-sans); letter-spacing: 0.15em; padding-block-start: 0.25rem; }
+	.overline { color: var(--wine); margin: 0 0 1rem; }
+	.prologue h2, .plan-heading h2, .convictions h2, .finale h2 { margin: 0; font-size: clamp(2.7rem, 5.5vw, 5.4rem); line-height: 0.95; letter-spacing: -0.045em; font-weight: 400; text-wrap: balance; }
+	.prologue-copy { border-inline-start: 1px solid var(--gold); padding-inline-start: clamp(1.5rem, 4vw, 3rem); }
+	.prologue-copy p { margin: 0 0 1.25rem; color: var(--muted); line-height: 1.75; text-wrap: pretty; }
+
+	.story-section { position: relative; z-index: 0; overflow: clip; padding: 7rem max(1.25rem, 5vw) 12rem; background: var(--canvas); isolation: isolate; }
+	.story-section::before { content: ''; position: absolute; z-index: -1; inset: 0 0 auto; block-size: min(78rem, 105dvh); background: linear-gradient(to bottom, rgba(16,18,15,0.38), rgba(16,18,15,0.5) 48%, var(--canvas) 100%), url('/images/covenant-kingdom-cinematic.webp') center / cover no-repeat; }
+	.story-heading { color: var(--paper); text-align: center; max-inline-size: 50rem; margin: 0 auto 7rem; text-shadow: 0 0.15rem 1.5rem rgba(0,0,0,0.38); }
+	.story-heading .overline { color: var(--gold-light); justify-content: center; }
+	.story-heading h2 { margin: 0; font-size: clamp(4rem, 9vw, 8.5rem); line-height: 0.84; letter-spacing: -0.065em; font-weight: 400; }
+	.story-heading h2 em { color: var(--gold-light); }
+	.story-heading > p:not(.overline, .chronology-note) { color: rgba(248,243,231,0.78); margin: 2rem auto 0; max-inline-size: 33rem; line-height: 1.7; }
+	.story-heading .chronology-note { max-inline-size: 43rem; margin: 1.1rem auto 0; padding: 0.85rem 1rem; color: rgba(248,243,231,0.72); background: rgba(22,25,21,0.5); border-inline-start: 2px solid var(--gold-light); font: 500 0.72rem/1.6 var(--font-sans); text-align: start; text-shadow: none; backdrop-filter: blur(0.5rem); }
+	.chronology-note span { color: var(--gold-light); font-weight: 800; letter-spacing: 0.09em; text-transform: uppercase; }
+	.timeline { position: relative; max-inline-size: 80rem; margin-inline: auto; }
+	.story-section.is-anchor-ready :global(.event) { content-visibility: visible; }
+	.timeline-line { position: absolute; z-index: 0; inset: 0 calc(50% - 0.5px); inline-size: 1px; background: linear-gradient(var(--gold), var(--wine) 45%, var(--gold)); transform-origin: 50% 0; }
+
+	.hinge { position: relative; min-block-size: 55dvh; display: grid; place-content: center; text-align: center; padding: 5rem 1.25rem; overflow: hidden; background: var(--wine); color: var(--paper); }
+	.hinge::before, .hinge::after { content: ''; position: absolute; inset-block: 0; inline-size: 24%; background: repeating-linear-gradient(90deg, transparent 0 1.5rem, rgba(255,255,255,0.04) 1.5rem calc(1.5rem + 1px)); }
+	.hinge::before { inset-inline-start: 0; }
+	.hinge::after { inset-inline-end: 0; }
+	.hinge-rule { inline-size: 1px; block-size: 5rem; background: var(--gold-light); margin: 0 auto 2rem; }
+	.hinge p { margin: 0 auto 1.5rem; max-inline-size: 55rem; font-size: clamp(2.5rem, 5vw, 5rem); line-height: 1.02; font-style: italic; text-wrap: balance; }
+	.hinge a { color: var(--gold-light); font: 700 0.7rem var(--font-sans); letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none; }
+
+	.plan-section { padding: clamp(6rem, 11vw, 10rem) max(1.25rem, 6vw); background: var(--paper); }
+	.plan-heading { max-inline-size: 88rem; margin: 0 auto 5rem; display: grid; grid-template-columns: 1.15fr 0.85fr; gap: clamp(3rem, 8vw, 9rem); align-items: end; }
+	.plan-heading h2 em { color: var(--wine); }
+	.plan-intro { color: var(--muted); line-height: 1.75; }
+	.plan-intro > p { margin: 0 0 1.5rem; }
+	.note { border-block-start: 1px solid var(--line); padding-block-start: 1.25rem; font-size: 0.87rem; }
+	.note span { display: block; color: var(--wine); margin-block-end: 0.35rem; font: 800 0.65rem var(--font-sans); letter-spacing: 0.12em; text-transform: uppercase; }
+	.plan-section :global(.plan-grid) { max-inline-size: 88rem; margin-inline: auto; }
+
+	.convictions { padding: clamp(6rem, 12vw, 11rem) max(1.25rem, 6vw); color: var(--paper); background: var(--ink); }
+	.convictions-intro { max-inline-size: 50rem; }
+	.convictions h2 em { color: var(--gold-light); }
+	.convictions-intro > p:last-child { color: rgba(247,242,229,0.62); line-height: 1.7; max-inline-size: 37rem; margin-block-start: 2rem; }
+	.convictions .overline { color: var(--gold-light); }
+	.conviction-grid { display: grid; grid-template-columns: repeat(4, 1fr); margin-block-start: 6rem; border-block-start: 1px solid rgba(255,255,255,0.18); }
+	.conviction-grid article { padding: 2rem clamp(1rem, 2.5vw, 2rem); border-inline-end: 1px solid rgba(255,255,255,0.18); }
+	.conviction-grid article:last-child { border: 0; }
+	.conviction-grid span { color: var(--gold-light); font: 700 0.65rem var(--font-sans); letter-spacing: 0.12em; }
+	.conviction-grid h3 { margin: 2.5rem 0 1rem; font-size: clamp(1.45rem, 2.2vw, 2rem); font-weight: 500; }
+	.conviction-grid p { color: rgba(247,242,229,0.6); line-height: 1.7; font-size: 0.92rem; margin: 0; text-wrap: pretty; }
+
+	.finale { min-block-size: 88dvh; display: grid; place-content: center; justify-items: center; text-align: center; padding: 7rem 1.25rem; color: var(--paper); background: linear-gradient(rgba(9,11,9,0.47), rgba(9,11,9,0.58)), url('/images/cross-new-creation-cinematic.webp') center / cover no-repeat, var(--ink); text-shadow: 0 0.15rem 1.4rem rgba(0,0,0,0.45); }
+	.finale .overline { justify-content: center; }
+	.finale .overline { color: var(--gold-light); }
+	.finale h2 em { color: var(--gold-light); }
+	.finale > p:not(.overline) { color: rgba(248,243,231,0.78); font-style: italic; font-size: 1.15rem; margin-block: 2rem; }
+	.finale > a { display: inline-flex; min-block-size: 3rem; align-items: center; gap: 0.7rem; padding-inline: 1.2rem; color: var(--paper); background: var(--wine); text-decoration: none; font: 700 0.7rem var(--font-sans); letter-spacing: 0.07em; text-transform: uppercase; }
+	.finale > a:hover { background: var(--ink); }
+	footer { display: grid; grid-template-columns: 1fr auto auto; align-items: center; gap: 2rem; padding: 2rem max(1.25rem, 4vw); border-block-start: 1px solid var(--line); background: var(--paper); color: var(--muted); font: 0.7rem/1.5 var(--font-sans); }
+	.footer-brand { color: var(--ink); }
+	.footer-brand .brand-copy small { color: var(--wine); }
+	footer p { margin: 0; }
+	.footer-meta { text-align: end; }
+	footer a:not(.brand) { color: var(--wine); }
+
+	@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
+		@media (prefers-reduced-motion: no-preference) {
+			.scroll-progress { animation: page-progress auto linear; animation-timeline: scroll(root block); }
+			.hero-inner { animation: hero-drift auto linear both; animation-timeline: view(block); animation-range: exit 0% exit 85%; }
+			.hero-seal { animation: seal-spin auto linear both; animation-timeline: scroll(root block); animation-range: 0 30%; }
+			.timeline-line { animation: line-grow auto linear both; animation-timeline: view(block); animation-range: entry 10% cover 92%; }
+		}
+	}
+	@keyframes page-progress { to { transform: scaleX(1); } }
+	@keyframes hero-drift { to { opacity: 0.15; transform: translateY(7rem) scale(0.96); } }
+	@keyframes seal-spin { to { transform: rotate(150deg); } }
+	@keyframes line-grow { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+	@media (max-width: 64rem) {
+		.site-header { grid-template-columns: 1fr auto; }
+		.site-header nav { display: none; }
+		.prologue { grid-template-columns: 3rem 1fr; }
+		.prologue-copy { grid-column: 2; }
+		.conviction-grid { grid-template-columns: repeat(2, 1fr); }
+		.conviction-grid article:nth-child(2) { border-inline-end: 0; }
+		.conviction-grid article:nth-child(-n+2) { border-block-end: 1px solid rgba(255,255,255,0.18); }
+		footer { grid-template-columns: 1fr; text-align: center; justify-items: center; }
+		.footer-meta { text-align: center; }
+	}
+
+	@media (max-width: 56rem) {
+		.timeline-line { inset-inline: 1.5rem auto; }
+		.story-heading { margin-block-end: 3rem; }
+		.plan-heading { grid-template-columns: 1fr; }
+	}
+
+	@media (max-width: 42rem) {
+		.site-header { min-block-size: 4.5rem; }
+		.brand-copy { max-inline-size: 8rem; }
+		.read-button { padding-inline: 0.75rem; }
+		.year-counter { inset-block-start: 0.6rem; }
+		.hero { padding-block-start: 7rem; align-items: center; }
+		.kicker { font-size: clamp(0.52rem, 2.45vw, 0.6rem); letter-spacing: 0.08em; white-space: nowrap; text-wrap: nowrap; }
+		.kicker span { display: none; }
+		h1 { font-size: clamp(3.7rem, 17vw, 6rem); }
+		.hero-copy { margin-block-start: 2rem; }
+		.hero-seal { display: none; }
+		.scroll-cue { display: none; }
+		.prologue { grid-template-columns: 1fr; padding-block: 6rem; }
+		.section-number { display: none; }
+		.prologue-copy { grid-column: 1; }
+		.conviction-grid { grid-template-columns: 1fr; }
+		.conviction-grid article { border-inline-end: 0; border-block-end: 1px solid rgba(255,255,255,0.18); }
+	}
+
+	@media (prefers-reduced-motion: reduce) {
+		.scroll-progress, .hero-inner, .hero-seal, .timeline-line { animation: none !important; transform: none !important; opacity: 1 !important; }
+		.scroll-progress { display: none; }
+		.year-counter { transition: none; }
+	}
+</style>
