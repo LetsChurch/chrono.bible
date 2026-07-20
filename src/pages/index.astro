@@ -324,10 +324,10 @@ import { expandedTimeline as timeline } from '../data/expanded-timeline';
 
 	@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
 		@media (prefers-reduced-motion: no-preference) {
-			.scroll-progress { animation: page-progress auto linear; animation-timeline: scroll(root block); }
-			.hero-inner { animation: hero-drift auto linear both; animation-timeline: view(block); animation-range: exit 0% exit 85%; }
-			.hero-seal { animation: seal-spin auto linear both; animation-timeline: scroll(root block); animation-range: 0 30%; }
-			.timeline-line { animation: line-grow auto linear both; animation-timeline: view(block); animation-range: entry 10% cover 92%; }
+			.scroll-progress { animation: page-progress var(--scroll-animation-duration, auto) linear; animation-timeline: scroll(root block); }
+			.hero-inner { animation: hero-drift var(--scroll-animation-duration, auto) linear both; animation-timeline: view(block); animation-range: exit 0% exit 85%; }
+			.hero-seal { animation: seal-spin var(--scroll-animation-duration, auto) linear both; animation-timeline: scroll(root block); animation-range: 0 30%; }
+			.timeline-line { animation: line-grow var(--scroll-animation-duration, auto) linear both; animation-timeline: view(block); animation-range: entry 10% cover 92%; }
 		}
 	}
 	@keyframes page-progress { to { transform: scaleX(1); } }

@@ -164,18 +164,18 @@ const threadLabel = {
 	@supports ((animation-timeline: scroll()) and (animation-range: 0% 100%)) {
 		@media (prefers-reduced-motion: no-preference) {
 			.event.has-background::before {
-				animation: backdrop-enter auto linear both;
+				animation: backdrop-enter var(--scroll-animation-duration, auto) linear both;
 				animation-timeline: --event-view;
 				animation-range: entry 0% entry 76%;
 			}
 			.card {
-				animation: event-enter auto linear backwards, event-exit auto linear forwards;
+				animation: event-enter var(--scroll-animation-duration, auto) linear backwards, event-exit var(--scroll-animation-duration, auto) linear forwards;
 				animation-timeline: --event-view;
 				animation-range: entry 34% cover 30%, exit 22% exit 72%;
 			}
 			.event[data-side='left'] .card { --event-x: -2.5rem; }
 			.event[data-side='right'] .card { --event-x: 2.5rem; }
-			.marker { animation: marker-bloom auto linear both; animation-timeline: --event-view; animation-range: entry 28% cover 38%; }
+			.marker { animation: marker-bloom var(--scroll-animation-duration, auto) linear both; animation-timeline: --event-view; animation-range: entry 28% cover 38%; }
 		}
 	}
 
