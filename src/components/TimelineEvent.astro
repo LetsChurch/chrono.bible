@@ -74,7 +74,10 @@ const threadLabel = {
 		mask-image: linear-gradient(to bottom, transparent 0%, #000 18%, #000 82%, transparent 100%);
 	}
 
-	.event-art { display: none; }
+	.event-art {
+		display: none;
+		pointer-events: none;
+	}
 
 	.event[data-importance='supporting'] {
 		min-block-size: 52dvh;
